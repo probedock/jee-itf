@@ -12,7 +12,7 @@
 	<name>Java EE Integration Test Framework (ITF)</name>
 	<description>Custom integration test framework to run tests directly into an application container.</description>
 
-	<url>https://github.com/lotaris/jee-itf</url>
+	<url>https://github.com/probedockgi/jee-itf</url>
 
 	<licenses>
 		<license>
