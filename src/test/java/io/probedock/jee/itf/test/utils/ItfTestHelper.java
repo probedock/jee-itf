@@ -76,7 +76,7 @@ public class ItfTestHelper {
 	
 	/**
 	 * This method is never run. It is used only to create
-	 * the description object to test the rox Filter that 
+	 * the description object to test the Filter that
 	 * allows to run test by key, tag, ticket or name.
 	 */
 	@Test
