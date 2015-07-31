@@ -121,12 +121,19 @@ control of the path where the resource is exposed.
 }
 ```
 
+#### Main object
+
 | Name         | Mandatory | Description |
 | ------------ | --------- | ----------- |
-| filters      | No        | Define a list of filters to run specific tests. |
-|   type       | Yes       | The filter type: *, key, name, fingerprint, tag and ticket are valid values. |
-|   text       | Yes       | Free text applied to filter type to match tests to run. |
+| filters[]    | No        | Define a list of filters to run specific tests. |
 | seed         | No        | Used to generate the test run order. If not sent, the order is random and the seed will appear in the logs. |
+
+#### Filter object
+
+| Name         | Mandatory | Description |
+| ------------ | --------- | ----------- |
+| type         | Yes       | The filter type: *, key, name, fingerprint, tag and ticket are valid values. |
+| text         | Yes       | Free text applied to filter type to match tests to run. |
 
 ### Requirements
 
