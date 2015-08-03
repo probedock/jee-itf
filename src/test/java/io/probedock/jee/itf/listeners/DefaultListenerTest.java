@@ -55,12 +55,12 @@ public class DefaultListenerTest {
 		doAnswer(new Answer<Object>() {
 			@Override
 			public Object answer(InvocationOnMock invocation) {
-				assertEquals("The message [Test run started.] is expected", (String) invocation.getArguments()[0], "Test run started.");
+				assertEquals("The message [[listener] Test run started.] is expected", "[listener] Test run started.", (String) invocation.getArguments()[0]);
 				return null;
 			}
 		}).when(mockLogger).info(any(String.class));
 		
-		DefaultListener dl = new DefaultListener();
+		DefaultListener dl = new DefaultListener("listener");
 	
 		dl.testRunStart();
 	}
@@ -68,7 +68,7 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "70de791d4aa9")
 	public void startDateShouldBeValidWhenTestRunStartIsNotified() {
-		DefaultListener dl = new DefaultListener();
+		DefaultListener dl = new DefaultListener("listener");
 	
 		dl.testRunStart();
 		
@@ -79,15 +79,15 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "7a90e429cb33")
 	public void specificMessageShouldBeLoggedWhenTestRunEndIsNotified() {
-		final DefaultListener dl = new DefaultListener();
+		final DefaultListener dl = new DefaultListener("listener");
 
 		dl.testRunStart();
 
 		doAnswer(new Answer<Object>() {
 			@Override
 			public Object answer(InvocationOnMock invocation) {
-				assertEquals("The message [Test run ended in " + (dl.endDate - dl.startDate) + "ms.] is expected", 
-					(String) invocation.getArguments()[0], "Test run ended in " + (dl.endDate - dl.startDate) + "ms.");
+				assertEquals("The message [[listener] Test run ended in " + (dl.endDate - dl.startDate) + "ms.] is expected",
+					"[listener] Test run ended in " + (dl.endDate - dl.startDate) + "ms.", (String) invocation.getArguments()[0]);
 				return null;
 			}
 		}).when(mockLogger).info(any(String.class));
@@ -98,7 +98,7 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "79a5655f8b1a")
 	public void endDateShouldBeValidWhenTestRunEndIsNotified() {
-		DefaultListener dl = new DefaultListener();
+		DefaultListener dl = new DefaultListener("listener");
 	
 		dl.testRunStart();
 		dl.testRunEnd();
@@ -111,13 +111,13 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "fb19c98fbd49")
 	public void specificMessageShouldBeLoggedWhenTestStartIsNotified() {
-		final DefaultListener dl = new DefaultListener();
+		final DefaultListener dl = new DefaultListener("listener");
 
 		doAnswer(new Answer<Object>() {
 			@Override
 			public Object answer(InvocationOnMock invocation) {
-				assertEquals("The message [Test " + description.getName() + " started.] is expected", 
-					(String) invocation.getArguments()[0], "Test " + description.getName() + " started.");
+				assertEquals("The message [[listener] Test " + description.getName() + " started.] is expected",
+					"[listener] Test " + description.getName() + " started.", (String) invocation.getArguments()[0]);
 				return null;
 			}
 		}).when(mockLogger).info(any(String.class));
@@ -128,7 +128,7 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "26f8953563f6")
 	public void startDateShouldBeSetWhenTestStartIsNotified() {
-		DefaultListener dl = new DefaultListener();
+		DefaultListener dl = new DefaultListener("listener");
 
 		dl.testStart(description);
 		
@@ -138,15 +138,15 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "4d6bb059864e")
 	public void specificMessageShouldBeLoggedWhenTestEndIsNotified() {
-		final DefaultListener dl = new DefaultListener();
+		final DefaultListener dl = new DefaultListener("listener");
 
 		dl.testStart(description);
 
 		doAnswer(new Answer<Object>() {
 			@Override
 			public Object answer(InvocationOnMock invocation) {
-				assertEquals("The message [Test " + description.getName() + " ended in " + description.getDuration() + "ms.] is expected", 
-					(String) invocation.getArguments()[0], "Test " + description.getName() + " ended in " + description.getDuration() + "ms.");
+				assertEquals("The message [[listener] Test " + description.getName() + " ended in " + description.getDuration() + "ms.] is expected",
+					 "[listener] Test " + description.getName() + " ended in " + description.getDuration() + "ms.", (String) invocation.getArguments()[0]);
 				return null;
 			}
 		}).when(mockLogger).info(any(String.class));
@@ -157,7 +157,7 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "82154126c9f4")
 	public void endDateShouldBeSetWhenTestEndIsNotified() {
-		DefaultListener dl = new DefaultListener();
+		DefaultListener dl = new DefaultListener("listener");
 
 		dl.testStart(description);
 		dl.testEnd(description);
@@ -168,7 +168,7 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "2058100dc7b7")
 	public void durationShouldBeSetWhenTestEndIsNotified() {
-		DefaultListener dl = new DefaultListener();
+		DefaultListener dl = new DefaultListener("listener");
 
 		dl.testStart(description);
 		dl.testEnd(description);
@@ -181,13 +181,13 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "d3a8e21f7dbd")
 	public void specificMessageShouldBeLoggedWhenFailIsNotified() {
-		final DefaultListener dl = new DefaultListener();
+		final DefaultListener dl = new DefaultListener("listener");
 
 		doAnswer(new Answer<Object>() {
 			@Override
 			public Object answer(InvocationOnMock invocation) {
-				assertEquals("The message [Test " + description.getName() + " failed with message: " + description.getMessage() + "] is expected", 
-					(String) invocation.getArguments()[0], "Test " + description.getName() + " failed with message: " + description.getMessage());
+				assertEquals("The message [[listener] Test " + description.getName() + " failed with message: " + description.getMessage() + "] is expected",
+					"[listener] Test " + description.getName() + " failed with message: " + description.getMessage(), (String) invocation.getArguments()[0]);
 				return null;
 			}
 		}).when(mockLogger).info(any(String.class));
@@ -198,13 +198,13 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "4642dd722f63")
 	public void specificMessageShouldBeLoggedWhenPassIsNotifiedWithMessageForPassed() {
-		final DefaultListener dl = new DefaultListener();
+		final DefaultListener dl = new DefaultListener("listener");
 
 		doAnswer(new Answer<Object>() {
 			@Override
 			public Object answer(InvocationOnMock invocation) {
-				assertEquals("The message [Test " + description.getName() + " succeed with message: " + description.getMessage() + "] is expected", 
-					(String) invocation.getArguments()[0], "Test " + description.getName() + " succeed with message: " + description.getMessage());
+				assertEquals("The message [[listener] Test " + description.getName() + " succeed with message: " + description.getMessage() + "] is expected",
+					"[listener] Test " + description.getName() + " succeed with message: " + description.getMessage(), (String) invocation.getArguments()[0]);
 				return null;
 			}
 		}).when(mockLogger).info(any(String.class));
@@ -215,13 +215,13 @@ public class DefaultListenerTest {
 	@Test
 	@ProbeTest(key = "9ceb8fbeabaf")
 	public void specificMessageShouldBeLoggedWhenPassIsNotifiedWithoutMessageForPassed() {
-		final DefaultListener dl = new DefaultListener();
+		final DefaultListener dl = new DefaultListener("listener");
 
 		doAnswer(new Answer<Object>() {
 			@Override
 			public Object answer(InvocationOnMock invocation) {
-				assertEquals("The message [Test " + description.getName() + " succeed.] is expected", 
-					(String) invocation.getArguments()[0], "Test " + description.getName() + " succeed.");
+				assertEquals("The message [[listener] Test " + description.getName() + " succeed.] is expected",
+					"[listener] Test " + description.getName() + " succeed.", (String) invocation.getArguments()[0]);
 				return null;
 			}
 		}).when(mockLogger).info(any(String.class));

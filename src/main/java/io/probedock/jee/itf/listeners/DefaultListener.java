@@ -12,50 +12,56 @@ import org.apache.commons.logging.LogFactory;
 public class DefaultListener implements Listener {
 
 	private static final Log LOGGER = LogFactory.getLog(DefaultListener.class);
-	
+
+	private String listenerName;
+
 	/**
 	 * Start and end dates of the test run
 	 */
 	protected long startDate;
 	protected long endDate;
-	
+
+	public DefaultListener(String listenerName) {
+		this.listenerName = listenerName;
+	}
+
 	@Override
 	public void testRunStart() {
 		startDate = System.currentTimeMillis();
-		LOGGER.info("Test run started.");
+		LOGGER.info("[" + listenerName + "] Test run started.");
 	}
 
 	@Override
 	public void testRunEnd() {
 		endDate = System.currentTimeMillis();
-		LOGGER.info("Test run ended in " + (endDate - startDate) + "ms.");
+		LOGGER.info("[" + listenerName + "] Test run ended in " + (endDate - startDate) + "ms.");
 	}
 
 	@Override
 	public void testStart(Description description) {
 		description.setStartDate(System.currentTimeMillis());
-		LOGGER.info("Test " + description.getName() + " started.");
+		LOGGER.info("[" + listenerName + "] Test " + description.getName() + " started.");
 	}
 
 	@Override
 	public void testEnd(Description description) {
 		description.setEndDate(System.currentTimeMillis());
 		description.setDuration(description.getEndDate() - description.getStartDate());
-		LOGGER.info("Test " + description.getName() + " ended in " + description.getDuration() + "ms.");
+		LOGGER.info("[" + listenerName + "] Test " + description.getName() + " ended in " + description.getDuration() + "ms.");
 	}
 
 	@Override
 	public void fail(Description description) {
-		LOGGER.info("Test " + description.getName() + " failed with message: " + description.getMessage());
+		LOGGER.info("[" + listenerName + "] Test " + description.getName() + " failed with message: " + description.getMessage());
 	}
 
 	@Override
 	public void success(Description description) {
 		if (description.getMessage() != null) {
-			LOGGER.info("Test " + description.getName() + " succeed with message: " + description.getMessage());
+			LOGGER.info("[" + listenerName + "] Test " + description.getName() + " succeed with message: " + description.getMessage());
 		}
 		else {
-			LOGGER.info("Test " + description.getName() + " succeed.");
+			LOGGER.info("[" + listenerName + "] Test " + description.getName() + " succeed.");
 		}
 	}
 }

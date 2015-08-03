@@ -85,7 +85,7 @@ public final class TestControllerConfiguration {
 	 */
 	protected void ensure() {
 		if (listeners.isEmpty()) {
-			listeners.put("defaultListener", new DefaultListener());
+			listeners.put("defaultListener", new DefaultListener("default listener"));
 		}
 		
 		if (filters.isEmpty()) {
